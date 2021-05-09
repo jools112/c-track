@@ -1,2 +1,2 @@
-# CTrack version 1
-WIP
+# CTrack version 1 (WIP)
+Simple calorie tracker.
