@@ -1,2 +1,0 @@
-# cTrack
-Simple calorie tracker.

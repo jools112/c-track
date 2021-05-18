@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 interface Props {
-  stringProp: string
+  stringProp: string;
 }
 
 export const CalendarNav: React.FC<Props> = (props) => {
-  return <div>{props.stringProp}</div>
-}
+  return <div>{props.stringProp}</div>;
+};

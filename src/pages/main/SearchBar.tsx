@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RootState } from '../../store/rootReducer';
@@ -17,7 +18,9 @@ export const SearchBar: React.FC<ReduxProps> = (props) => {
   return (
     <div>
       <button onClick={() => props.click()}>
-        {props.mapCheese.length >= 1 ? props.mapCheese[0].name : 'ostkorv'}
+        {props.mapCheese.length >= 1
+          ? props.mapCheese[0].name
+          : 'SearchBar Placeholder'}
       </button>
     </div>
   );

@@ -24,7 +24,7 @@ export const searchBarReducer = (
         ...state,
         result: [
           ...state.result,
-          { name: 'ostbågar', isMeal: false, calories: 500 }
+          { name: 'search pressed', isMeal: false, calories: 500 }
         ]
       };
     default:

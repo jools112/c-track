@@ -1,10 +1,16 @@
-import { combineReducers } from 'redux'
-import { searchBarReducer, SearchBarState } from './searchBar/searchBarReducer'
+import { combineReducers } from 'redux';
+import {
+  DaySummaryReducer,
+  DaySummaryState
+} from './daySummary/daySummaryReducer';
+import { searchBarReducer, SearchBarState } from './searchBar/searchBarReducer';
 
 export interface RootState {
-  searchBar: SearchBarState
+  searchBar: SearchBarState;
+  daySummary: DaySummaryState;
 }
 
 export const rootReducer = combineReducers({
-  searchBar: searchBarReducer
-})
+  searchBar: searchBarReducer,
+  daySummary: DaySummaryReducer
+});

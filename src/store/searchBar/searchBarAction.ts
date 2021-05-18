@@ -1,1 +1,1 @@
-export const cheeseAction = () => ({ type: 'CHEESE_ACTION' })
+export const cheeseAction = () => ({ type: 'CHEESE_ACTION' });

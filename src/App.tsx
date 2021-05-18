@@ -1,17 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { CalendarNav } from './pages/main/CalendarNav';
-import { DaySummary } from './pages/main/DaySummary';
+import { ConnectedDaySummary } from './pages/main/DaySummary';
 import { ConnectedSearchBar } from './pages/main/SearchBar';
-import { searchBarReducer } from './store/searchBar/searchBarReducer';
 
 function App() {
   return (
     <div className="App">
-      <ConnectedSearchBar stringProp="ost"></ConnectedSearchBar>
-      <DaySummary stringProp="spenat" />
-      <CalendarNav stringProp="mjölk" />
+      <ConnectedSearchBar stringProp="SearchBar placeholder"></ConnectedSearchBar>
+      <ConnectedDaySummary />
+      <br />
+      <CalendarNav stringProp="Calendar Nav placeholder" />
     </div>
   );
 }
