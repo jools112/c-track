@@ -12,7 +12,7 @@ type ReduxProps = Props &
 export const DaySummary: React.FC<ReduxProps> = (props) => {
   const { mapFetchEntries } = props;
 
-  useEffect(() => mapFetchEntries(), [mapFetchEntries]);
+  useEffect(() => mapFetchEntries(props.mapDate), [mapFetchEntries]);
 
   const caloriesConsumed = props.mapEntries.reduce((a, b) => a + b.calories, 0);
   return (
@@ -41,12 +41,13 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
 const mapStateToProps = (state: RootState) => {
   return {
     mapEntries: state.daySummary.entries,
-    mapAllowedCalories: state.daySummary.allowedCalories
+    mapAllowedCalories: state.daySummary.allowedCalories,
+    mapDate: state.calendar.selectedDay
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  mapFetchEntries: () => dispatch(fetchEntries())
+  mapFetchEntries: (date: string) => dispatch(fetchEntries(date))
 });
 
 export const ConnectedDaySummary = connect(
