@@ -12,7 +12,10 @@ type ReduxProps = Props &
 export const DaySummary: React.FC<ReduxProps> = (props) => {
   const { mapFetchEntries } = props;
 
-  useEffect(() => mapFetchEntries(props.mapDate), [mapFetchEntries]);
+  useEffect(() => mapFetchEntries(props.mapDate), [
+    mapFetchEntries,
+    props.mapDate
+  ]);
 
   const caloriesConsumed = props.mapEntries.reduce((a, b) => a + b.calories, 0);
   return (

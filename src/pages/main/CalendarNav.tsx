@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
-import { calendarActionCreator } from '../../store/calendar/calendarActions';
+import {
+  calendarDayBackActionCreator,
+  calendarDayForwardActionCreator,
+  calendarTodayActionCreator
+} from '../../store/calendar/calendarActions';
 
 interface Props {}
 type ReduxProps = Props &
@@ -9,9 +13,17 @@ type ReduxProps = Props &
   ReturnType<typeof mapDispatchToProps>;
 
 export const CalendarNav: React.FC<ReduxProps> = (props) => {
+  console.log(props);
   return (
     <div>
-      <span>{props.mapSelectedDate} is today!</span>
+      <div>
+        <button onClick={() => props.mapDayBack()}>yesterday</button>
+        <span> Showing entries for {props.mapSelectedDate}: </span>
+        <button onClick={() => props.mapDayForward()}>tomorrow</button>
+      </div>
+      <div>
+        <button onClick={() => props.mapToday()}>back to today</button>
+      </div>
     </div>
   );
 };
@@ -21,7 +33,9 @@ const mapStateToProps = (state: RootState) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  mapSetDate: () => dispatch(calendarActionCreator())
+  mapDayBack: () => dispatch(calendarDayBackActionCreator()),
+  mapDayForward: () => dispatch(calendarDayForwardActionCreator()),
+  mapToday: () => dispatch(calendarTodayActionCreator())
 });
 
 export const ConnectedCalendarNav = connect(
