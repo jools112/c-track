@@ -1,17 +1,15 @@
-interface Entry {
-  name: string;
-  isMeal: boolean;
-  calories: number;
-}
+import { Result } from '../../models/result';
 
 export interface SearchBarState {
   query: string;
-  result: Array<Entry>;
+  results: Array<Result>;
+  isSearching: boolean;
 }
 
 const initialState: SearchBarState = {
   query: '',
-  result: []
+  results: [],
+  isSearching: false
 };
 
 export const searchBarReducer = (
@@ -19,13 +17,20 @@ export const searchBarReducer = (
   action: any
 ): SearchBarState => {
   switch (action.type) {
-    case 'CHEESE_ACTION':
+    case 'SEARCHBAR_RECEIVE_RESULTS':
       return {
         ...state,
-        result: [
-          ...state.result,
-          { name: 'search pressed', isMeal: false, calories: 500 }
-        ]
+        results: action.payload
+      };
+    case 'SEARCHBAR_SET_QUERY':
+      return {
+        ...state,
+        query: action.payload
+      };
+    case 'SEARCHBAR_TOGGLE_SEARCHING':
+      return {
+        ...state,
+        isSearching: action.payload
       };
     default:
       return state;
