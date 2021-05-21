@@ -22,7 +22,8 @@ export const addEntry = (result: Result): ThunkAction => (
     name: result.name,
     id: result.id,
     quantity: getState().searchBar.selectedQuantity,
-    type: getState().searchBar.selectedResult?.type
+    type: getState().searchBar.selectedResult?.type,
+    date: getState().calendar.selectedDay
   });
   promise.then((response) =>
     dispatch(fetchEntries(getState().calendar.selectedDay))
