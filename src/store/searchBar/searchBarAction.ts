@@ -33,3 +33,15 @@ export const toggleSearchingSearchBarActionCreator = (
   type: 'SEARCHBAR_TOGGLE_SEARCHING',
   payload: isSearching
 });
+
+export const selectResultSearchBarActionCreator = (selectedResult: Result) => ({
+  type: 'SEARCHBAR_SELECT_RESULT',
+  payload: selectedResult
+});
+
+export const selectQuantitySearchBarActionCreator = (
+  selectedQuantity: number
+) => ({
+  type: 'SEARCHBAR_SELECT_QUANTITY',
+  payload: selectedQuantity
+});

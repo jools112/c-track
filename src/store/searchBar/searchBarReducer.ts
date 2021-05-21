@@ -4,12 +4,16 @@ export interface SearchBarState {
   query: string;
   results: Array<Result>;
   isSearching: boolean;
+  selectedResult: Result | undefined;
+  selectedQuantity: number;
 }
 
 const initialState: SearchBarState = {
   query: '',
   results: [],
-  isSearching: false
+  isSearching: false,
+  selectedResult: undefined,
+  selectedQuantity: 0
 };
 
 export const searchBarReducer = (
@@ -31,6 +35,16 @@ export const searchBarReducer = (
       return {
         ...state,
         isSearching: action.payload
+      };
+    case 'SEARCHBAR_SELECT_RESULT':
+      return {
+        ...state,
+        selectedResult: action.payload
+      };
+    case 'SEARCHBAR_SELECT_QUANTITY':
+      return {
+        ...state,
+        selectedQuantity: action.payload
       };
     default:
       return state;

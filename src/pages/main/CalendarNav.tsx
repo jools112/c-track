@@ -17,12 +17,12 @@ export const CalendarNav: React.FC<ReduxProps> = (props) => {
   return (
     <div>
       <div>
-        <button onClick={() => props.mapDayBack()}>yesterday</button>
+        <button onClick={() => props.mapDayBack()}>dag bakåt</button>
         <span> Showing entries for {props.mapSelectedDate}: </span>
-        <button onClick={() => props.mapDayForward()}>tomorrow</button>
+        <button onClick={() => props.mapDayForward()}>dag framåt</button>
       </div>
       <div>
-        <button onClick={() => props.mapToday()}>back to today</button>
+        <button onClick={() => props.mapToday()}>tillbaka till idag</button>
       </div>
     </div>
   );
