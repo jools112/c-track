@@ -4,11 +4,11 @@ import { Result } from '../../models/result';
 import { addEntry } from '../../store/daySummary/daySummaryAction';
 import { RootState } from '../../store/rootReducer';
 import {
-  setQuerySearchBarActionCreator,
+  setQuery,
   fetchResultsSearchBarThunk,
-  toggleSearchingSearchBarActionCreator,
-  selectResultSearchBarActionCreator,
-  selectQuantitySearchBarActionCreator
+  endSearch,
+  selectResult,
+  selectQuantity
 } from '../../store/searchBar/searchBarAction';
 
 interface Props {
@@ -25,7 +25,7 @@ export const SearchBar: React.FC<ReduxProps> = ({
   mapResults,
   mapSelectedQuantity,
   mapSelectedResult,
-  toggleSearching,
+  endSearch,
   fetchResults,
   selectQuantity,
   selectResult,
@@ -34,7 +34,6 @@ export const SearchBar: React.FC<ReduxProps> = ({
 }) => {
   const submitQuery = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toggleSearching(true);
     fetchResults(mapQuery);
   };
   return (
@@ -70,6 +69,7 @@ export const SearchBar: React.FC<ReduxProps> = ({
                       {mapSelectedResult.name}{' '}
                       <input
                         type="number"
+                        value={mapSelectedQuantity}
                         onChange={(e) => selectQuantity(Number(e.target.value))}
                       />
                       gram
@@ -84,7 +84,7 @@ export const SearchBar: React.FC<ReduxProps> = ({
               </div>
               <button
                 onClick={() => {
-                  toggleSearching(false);
+                  endSearch();
                 }}
               >
                 ❌ 🔎
@@ -118,16 +118,15 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: any) => ({
   fetchResults: (query: string) => dispatch(fetchResultsSearchBarThunk(query)),
 
-  setQuery: (query: string) => dispatch(setQuerySearchBarActionCreator(query)),
+  setQuery: (query: string) => dispatch(setQuery(query)),
 
-  toggleSearching: (isSearching: boolean) =>
-    dispatch(toggleSearchingSearchBarActionCreator(isSearching)),
+  endSearch: () => dispatch(endSearch()),
 
   selectResult: (selectedResult: Result) =>
-    dispatch(selectResultSearchBarActionCreator(selectedResult)),
+    dispatch(selectResult(selectedResult)),
 
   selectQuantity: (selectedQuantity: number) =>
-    dispatch(selectQuantitySearchBarActionCreator(selectedQuantity)),
+    dispatch(selectQuantity(selectedQuantity)),
 
   addEntry: (result: Result) => dispatch(addEntry(result))
 });

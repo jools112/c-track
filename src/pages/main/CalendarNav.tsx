@@ -13,7 +13,6 @@ type ReduxProps = Props &
   ReturnType<typeof mapDispatchToProps>;
 
 export const CalendarNav: React.FC<ReduxProps> = (props) => {
-  console.log(props);
   return (
     <div>
       <div>

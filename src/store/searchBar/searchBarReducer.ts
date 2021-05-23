@@ -29,12 +29,17 @@ export const searchBarReducer = (
     case 'SEARCHBAR_SET_QUERY':
       return {
         ...state,
+        isSearching: true,
         query: action.payload
       };
-    case 'SEARCHBAR_TOGGLE_SEARCHING':
+    /*case 'SEARCHBAR_TOGGLE_SEARCHING':
       return {
         ...state,
         isSearching: action.payload
+      };*/
+    case 'SEARCHBAR_END_SEARCH':
+      return {
+        ...initialState
       };
     case 'SEARCHBAR_SELECT_RESULT':
       return {

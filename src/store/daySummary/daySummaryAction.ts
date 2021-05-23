@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Entry } from '../../models/entry';
 import { Result } from '../../models/result';
 import { RootState } from '../rootReducer';
-
+import { endSearch } from '../searchBar/searchBarAction';
 type ThunkAction = (dispatch: any, getState: () => RootState) => any;
 
 export const fetchEntries = (date: string): ThunkAction => (dispatch) => {
@@ -25,9 +25,10 @@ export const addEntry = (result: Result): ThunkAction => (
     type: getState().searchBar.selectedResult?.type,
     date: getState().calendar.selectedDay
   });
-  promise.then((response) =>
-    dispatch(fetchEntries(getState().calendar.selectedDay))
-  );
+  promise.then((response) => {
+    dispatch(endSearch());
+    dispatch(fetchEntries(getState().calendar.selectedDay));
+  });
 };
 
 export const receiveEntriesActionCreator = (entries: Array<Entry>) => ({

@@ -10,38 +10,34 @@ export const fetchResultsSearchBarThunk = (query: string): ThunkAction => (
   const promise = axios.get<Array<Result>>(
     'http://127.0.0.1:5000/search?query=' + query
   );
-  promise.then((response) =>
-    dispatch(receiveResultsSearchBarActionCreator(response.data))
-  );
+  promise.then((response) => dispatch(receiveResults(response.data)));
 };
 
-export const receiveResultsSearchBarActionCreator = (
-  results: Array<Result>
-) => ({
+export const receiveResults = (results: Array<Result>) => ({
   type: 'SEARCHBAR_RECEIVE_RESULTS',
   payload: results
 });
 
-export const setQuerySearchBarActionCreator = (query: string) => ({
+export const setQuery = (query: string) => ({
   type: 'SEARCHBAR_SET_QUERY',
   payload: query
 });
 
-export const toggleSearchingSearchBarActionCreator = (
-  isSearching: boolean
-) => ({
+/*export const toggleSearching = (isSearching: boolean) => ({
   type: 'SEARCHBAR_TOGGLE_SEARCHING',
   payload: isSearching
+});*/
+
+export const endSearch = () => ({
+  type: 'SEARCHBAR_END_SEARCH'
 });
 
-export const selectResultSearchBarActionCreator = (selectedResult: Result) => ({
+export const selectResult = (selectedResult: Result) => ({
   type: 'SEARCHBAR_SELECT_RESULT',
   payload: selectedResult
 });
 
-export const selectQuantitySearchBarActionCreator = (
-  selectedQuantity: number
-) => ({
+export const selectQuantity = (selectedQuantity: number) => ({
   type: 'SEARCHBAR_SELECT_QUANTITY',
   payload: selectedQuantity
 });
