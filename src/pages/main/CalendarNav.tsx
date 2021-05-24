@@ -6,6 +6,8 @@ import {
   calendarDayForwardActionCreator,
   calendarTodayActionCreator
 } from '../../store/calendar/calendarActions';
+import Button from '@material-ui/core/Button';
+import { Grid, GridList, Typography } from '@material-ui/core';
 
 interface Props {}
 type ReduxProps = Props &
@@ -14,16 +16,44 @@ type ReduxProps = Props &
 
 export const CalendarNav: React.FC<ReduxProps> = (props) => {
   return (
-    <div>
-      <div>
-        <button onClick={() => props.mapDayBack()}>dag bakåt</button>
-        <span> Showing entries for {props.mapSelectedDate}: </span>
-        <button onClick={() => props.mapDayForward()}>dag framåt</button>
-      </div>
-      <div>
-        <button onClick={() => props.mapToday()}>tillbaka till idag</button>
-      </div>
-    </div>
+    <>
+      <Grid item xs={12}>
+        <Grid container spacing={2} justify="center">
+          <Grid item>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => props.mapDayBack()}
+            >
+              dag bakåt
+            </Button>
+          </Grid>
+          <Grid item>
+            <Typography variant="h5">
+              Visar mat för {props.mapSelectedDate}:
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => props.mapDayForward()}
+            >
+              dag framåt
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => props.mapToday()}
+        >
+          tillbaka till idag
+        </Button>
+      </Grid>
+    </>
   );
 };
 

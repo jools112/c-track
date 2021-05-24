@@ -1,3 +1,14 @@
+import {
+  Button,
+  createStyles,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  makeStyles,
+  TextField,
+  Typography
+} from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Result } from '../../models/result';
@@ -19,85 +30,148 @@ type ReduxProps = Props &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    listItem: {
+      textAlign: 'center'
+    }
+  })
+);
+
 export const SearchBar: React.FC<ReduxProps> = ({
-  mapQuery,
   mapIsSearching,
+  mapQuery,
   mapResults,
   mapSelectedQuantity,
   mapSelectedResult,
+  addEntry,
   endSearch,
   fetchResults,
-  selectQuantity,
   selectResult,
-  setQuery,
-  addEntry
+  selectQuantity,
+  setQuery
 }) => {
+  const classes = useStyles();
   const submitQuery = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchResults(mapQuery);
   };
   return (
-    <div>
-      <form onSubmit={submitQuery}>
-        <input
-          type="text"
-          placeholder="sök..."
-          value={mapQuery}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <input type="submit" value="🔎" />
-      </form>
-      {mapIsSearching ? (
-        <div>
-          {mapResults.length > 0 ? (
-            <div>
-              <span> Resultat: </span>
-              <ul>
-                {mapResults.map((result, index) => {
-                  return (
-                    <li key={index} onClick={() => selectResult(result)}>
-                      {result.name} ({result.calories}kcal/100g)
-                    </li>
-                  );
-                })}
-              </ul>
-              <div>
-                Vald mat:
-                <div>
-                  {mapSelectedResult ? (
-                    <div>
-                      {mapSelectedResult.name}{' '}
-                      <input
+    <>
+      <Grid item xs={12}>
+        <form onSubmit={submitQuery}>
+          <Grid container justify="center" spacing={2}>
+            <Grid item>
+              <TextField
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Sök matvara/maträtt..."
+                type="text"
+                value={mapQuery}
+              />
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="primary" type="submit">
+                Sök
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Grid>
+      <Grid item xs={12}>
+        {mapIsSearching ? (
+          <Grid container justify="center" spacing={2}>
+            {mapResults.length > 0 ? (
+              <>
+                <Grid item xs={12}>
+                  <Typography variant="body1">Resultat:</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <List>
+                    {mapResults.map((result, index) => {
+                      return (
+                        <ListItem className={classes.listItem}>
+                          <ListItemText
+                            primary={
+                              result.type === 'food'
+                                ? '🥕 ' +
+                                  result.name +
+                                  ' (' +
+                                  result.calories +
+                                  'kcal/100g)'
+                                : '🍲 ' +
+                                  result.name +
+                                  ' (' +
+                                  result.calories +
+                                  'kcal/100g)'
+                            }
+                            onClick={() => selectResult(result)}
+                          />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="body1">Vald mat:</Typography>
+                </Grid>
+                {mapSelectedResult ? (
+                  <>
+                    <Grid item>
+                      <Typography variant="body1">
+                        {mapSelectedResult.name}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        onChange={(e) => selectQuantity(Number(e.target.value))}
                         type="number"
                         value={mapSelectedQuantity}
-                        onChange={(e) => selectQuantity(Number(e.target.value))}
                       />
-                      gram
-                      <button onClick={() => addEntry(mapSelectedResult)}>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">gram</Typography>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        color="secondary"
+                        onClick={() => addEntry(mapSelectedResult)}
+                        variant="contained"
+                      >
                         lägg till
-                      </button>
-                    </div>
-                  ) : (
-                    'ingenting'
-                  )}
-                </div>
-              </div>
-              <button
-                onClick={() => {
-                  endSearch();
-                }}
-              >
-                ❌ 🔎
-              </button>
-            </div>
-          ) : (
-            'inga träffar'
-          )}
-        </div>
-      ) : (
-        'ingen aktiv sökning'
-      )}
-    </div>
+                      </Button>
+                    </Grid>
+                  </>
+                ) : (
+                  <Grid item xs={12}>
+                    <Typography variant="body1">ingen mat vald</Typography>
+                  </Grid>
+                )}
+
+                <Grid item xs={12}>
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      endSearch();
+                    }}
+                    variant="outlined"
+                  >
+                    Avbryt sök
+                  </Button>
+                </Grid>
+              </>
+            ) : (
+              <Grid item xs={12}>
+                <Typography variant="body1">inga träffar</Typography>
+              </Grid>
+            )}
+          </Grid>
+        ) : (
+          <Grid item xs={12}>
+            <Typography variant="body1">ingen aktiv sökning</Typography>
+          </Grid>
+        )}
+      </Grid>
+    </>
   );
 };
 
