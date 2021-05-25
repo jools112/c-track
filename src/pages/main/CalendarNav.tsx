@@ -30,7 +30,7 @@ export const CalendarNav: React.FC<ReduxProps> = (props) => {
           </Grid>
           <Grid item>
             <Typography variant="h5">
-              Visar mat för {props.mapSelectedDate}:
+              Visar mat för {props.mapSelectedDate}
             </Typography>
           </Grid>
           <Grid item>

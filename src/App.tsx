@@ -19,7 +19,8 @@ const theme = createMuiTheme({
       main: palette.green
     },
     background: {
-      default: palette.grey
+      default: palette.grey,
+      paper: palette.lighterGrey
     },
     text: {
       primary: palette.white,

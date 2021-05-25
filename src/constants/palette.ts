@@ -14,5 +14,6 @@ export const palette = {
   green: green['A100'],
   orange: orange['A100'],
   grey: grey[900],
+  lighterGrey: grey[800],
   white: grey[50]
 };

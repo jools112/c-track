@@ -21,6 +21,7 @@ type ReduxProps = Props &
 const useStyles = makeStyles((theme) =>
   createStyles({
     listItem: {
+      backgroundColor: theme.palette.background.paper,
       textAlign: 'center'
     }
   })
@@ -43,7 +44,7 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
       </Grid>
       <Grid item xs={12}>
         <Grid container justify="center">
-          <Grid item xs={12}>
+          <Grid item xs={3}>
             <List>
               {props.mapEntries.map((entry, index) => {
                 return (

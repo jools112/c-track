@@ -33,6 +33,7 @@ type ReduxProps = Props &
 const useStyles = makeStyles((theme) =>
   createStyles({
     listItem: {
+      backgroundColor: theme.palette.background.paper,
       textAlign: 'center'
     }
   })
@@ -67,6 +68,7 @@ export const SearchBar: React.FC<ReduxProps> = ({
                 placeholder="Sök matvara/maträtt..."
                 type="text"
                 value={mapQuery}
+                variant="standard"
               />
             </Grid>
             <Grid item>
@@ -89,7 +91,7 @@ export const SearchBar: React.FC<ReduxProps> = ({
                   <List>
                     {mapResults.map((result, index) => {
                       return (
-                        <ListItem className={classes.listItem}>
+                        <ListItem button className={classes.listItem}>
                           <ListItemText
                             primary={
                               result.type === 'food'
