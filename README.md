@@ -11,7 +11,7 @@ A simple calorie tracker.
 
 ## Scripts:
 * To run locally, use `yarn start` to start the development server.
-* User `yarn build` to build a production bundle.
+* Use `yarn build` to build a production bundle.
 
    
 ## Version 2 will feature: 
