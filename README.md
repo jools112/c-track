@@ -17,4 +17,6 @@ A simple calorie tracker.
 ## Version 2 will feature: 
 * Expandable list items
 * Add new food/meal to database
-* etc
+* Calendar view
+* Expandalbe list items
+* Weight track
