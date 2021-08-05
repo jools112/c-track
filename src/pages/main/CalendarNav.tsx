@@ -7,7 +7,7 @@ import {
   calendarTodayActionCreator
 } from '../../store/calendar/calendarActions';
 import Button from '@material-ui/core/Button';
-import { Grid, GridList, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 interface Props {}
 type ReduxProps = Props &

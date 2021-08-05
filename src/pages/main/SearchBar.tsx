@@ -125,9 +125,14 @@ export const SearchBar: React.FC<ReduxProps> = ({
                     </Grid>
                     <Grid item>
                       <TextField
+                        helperText={
+                          mapSelectedQuantity < 1 && 'minst 1 gram eller mer'
+                        }
+                        error={mapSelectedQuantity < 1}
                         onChange={(e) => selectQuantity(Number(e.target.value))}
                         type="number"
                         value={mapSelectedQuantity}
+                        InputProps={{ inputProps: { min: 1 } }}
                       />
                     </Grid>
                     <Grid item>
@@ -136,6 +141,7 @@ export const SearchBar: React.FC<ReduxProps> = ({
                     <Grid item>
                       <Button
                         color="secondary"
+                        disabled={mapSelectedQuantity < 1}
                         onClick={() => addEntry(mapSelectedResult)}
                         variant="contained"
                       >

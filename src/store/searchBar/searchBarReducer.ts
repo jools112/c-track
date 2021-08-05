@@ -13,7 +13,7 @@ const initialState: SearchBarState = {
   results: [],
   isSearching: false,
   selectedResult: undefined,
-  selectedQuantity: 0
+  selectedQuantity: 1
 };
 
 export const searchBarReducer = (
