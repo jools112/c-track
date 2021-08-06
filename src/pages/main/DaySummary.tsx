@@ -1,15 +1,30 @@
 import {
   createStyles,
+  Button,
   Grid,
+  IconButton,
   List,
   ListItem,
   ListItemText,
+  ListItemSecondaryAction,
   makeStyles,
-  Typography
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  TextField
 } from '@material-ui/core';
+import { Delete, Create, Cancel, CheckCircle } from '@material-ui/icons';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchEntries } from '../../store/daySummary/daySummaryAction';
+import {
+  fetchEntries,
+  selectQuantity,
+  toggleUpdateDialog,
+  toggleDeleteDialog
+} from '../../store/daySummary/daySummaryAction';
 import { RootState } from '../../store/rootReducer';
 
 interface Props {}
@@ -59,6 +74,56 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
                         'kcal)'
                       }
                     />
+
+                    <ListItemSecondaryAction>
+                      <IconButton
+                        edge="end"
+                        aria-label="delete"
+                        onClick={() => props.toggleUpdate()}
+                      >
+                        <Create />
+                      </IconButton>
+                      <Dialog
+                        open={props.mapUpdateOpen}
+                        onClose={() => props.toggleUpdate()}
+                      >
+                        <DialogTitle>Uppdatera mängd</DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            För in den nya mängden i gram.
+                          </DialogContentText>
+                          <TextField
+                            helperText={
+                              props.mapNewQuantity === undefined ||
+                              props.mapNewQuantity < 1
+                                ? 'minst 1 gram eller mer'
+                                : ''
+                            }
+                            error={
+                              props.mapNewQuantity === undefined ||
+                              props.mapNewQuantity < 1
+                            }
+                            onChange={(e) =>
+                              props.selectQuantity(Number(e.target.value))
+                            }
+                            type="number"
+                            value={props.mapNewQuantity}
+                            InputProps={{ inputProps: { min: 1 } }}
+                          />
+                        </DialogContent>
+                        <DialogActions>
+                          <IconButton>
+                            <Cancel />
+                          </IconButton>
+                          <IconButton onClick={() => props.toggleUpdate()}>
+                            <CheckCircle />
+                          </IconButton>
+                        </DialogActions>
+                      </Dialog>
+                      <IconButton edge="end" aria-label="delete">
+                        <Delete />
+                      </IconButton>
+                    </ListItemSecondaryAction>
                   </ListItem>
                 );
               })}
@@ -84,12 +149,22 @@ const mapStateToProps = (state: RootState) => {
   return {
     mapEntries: state.daySummary.entries,
     mapAllowedCalories: state.daySummary.allowedCalories,
-    mapDate: state.calendar.selectedDay
+    mapDate: state.calendar.selectedDay,
+    mapNewQuantity: state.daySummary.newQuantity,
+    mapUpdateOpen: state.daySummary.updateOpen,
+    mapDeleteOpen: state.daySummary.deleteOpen
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  mapFetchEntries: (date: string) => dispatch(fetchEntries(date))
+  mapFetchEntries: (date: string) => dispatch(fetchEntries(date)),
+
+  selectQuantity: (selectedQuantity: number) =>
+    dispatch(selectQuantity(selectedQuantity)),
+
+  toggleUpdate: () => dispatch(toggleUpdateDialog()),
+
+  toggleDelete: () => dispatch(toggleDeleteDialog())
 });
 
 export const ConnectedDaySummary = connect(

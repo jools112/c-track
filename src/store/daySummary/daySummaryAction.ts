@@ -40,3 +40,16 @@ export const updateEntriesActionCreator = (newEntry: Entry) => ({
   type: 'DAY_SUMMARY_UPDATE_ENTRIES',
   payload: newEntry
 });
+
+export const selectQuantity = (newQuantity: number) => ({
+  type: 'DAY_SUMMARY_SELECT_QUANTITY',
+  payload: newQuantity
+});
+
+export const toggleUpdateDialog = () => ({
+  type: 'DAY_SUMMARY_TOGGLE_UPDATE_DIALOG'
+});
+
+export const toggleDeleteDialog = () => ({
+  type: 'DAY_SUMMARY_TOGGLE_DELETE_DIALOG'
+});

@@ -126,7 +126,8 @@ export const SearchBar: React.FC<ReduxProps> = ({
                     <Grid item>
                       <TextField
                         helperText={
-                          mapSelectedQuantity < 1 && 'minst 1 gram eller mer'
+                          mapSelectedQuantity < 1 &&
+                          'mängden mat måste vara mer än 1g'
                         }
                         error={mapSelectedQuantity < 1}
                         onChange={(e) => selectQuantity(Number(e.target.value))}
