@@ -63,7 +63,7 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
             <List>
               {props.mapEntries.map((entry, index) => {
                 return (
-                  <ListItem className={classes.listItem}>
+                  <ListItem className={classes.listItem} key={index}>
                     <ListItemText
                       primary={
                         entry.quantity +
@@ -78,49 +78,17 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
                     <ListItemSecondaryAction>
                       <IconButton
                         edge="end"
-                        aria-label="delete"
-                        onClick={() => props.toggleUpdate()}
+                        onClick={() => {
+                          props.toggleUpdate();
+                          props.selectQuantity(entry.quantity);
+                        }}
                       >
                         <Create />
                       </IconButton>
-                      <Dialog
-                        open={props.mapUpdateOpen}
-                        onClose={() => props.toggleUpdate()}
+                      <IconButton
+                        edge="end"
+                        onClick={() => props.toggleDelete()}
                       >
-                        <DialogTitle>Uppdatera mängd</DialogTitle>
-                        <DialogContent>
-                          <DialogContentText>
-                            För in den nya mängden i gram.
-                          </DialogContentText>
-                          <TextField
-                            helperText={
-                              props.mapNewQuantity === undefined ||
-                              props.mapNewQuantity < 1
-                                ? 'minst 1 gram eller mer'
-                                : ''
-                            }
-                            error={
-                              props.mapNewQuantity === undefined ||
-                              props.mapNewQuantity < 1
-                            }
-                            onChange={(e) =>
-                              props.selectQuantity(Number(e.target.value))
-                            }
-                            type="number"
-                            value={props.mapNewQuantity}
-                            InputProps={{ inputProps: { min: 1 } }}
-                          />
-                        </DialogContent>
-                        <DialogActions>
-                          <IconButton>
-                            <Cancel />
-                          </IconButton>
-                          <IconButton onClick={() => props.toggleUpdate()}>
-                            <CheckCircle />
-                          </IconButton>
-                        </DialogActions>
-                      </Dialog>
-                      <IconButton edge="end" aria-label="delete">
                         <Delete />
                       </IconButton>
                     </ListItemSecondaryAction>
@@ -141,6 +109,55 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
           </Typography>
         </Grid>
       </Grid>
+      <Dialog open={props.mapUpdateOpen}>
+        <DialogTitle>Uppdatera mängd</DialogTitle>
+        <DialogContent>
+          <DialogContentText>För in den nya mängden i gram.</DialogContentText>
+          <TextField
+            helperText={
+              props.mapNewQuantity === undefined || props.mapNewQuantity < 1
+                ? 'minst 1 gram eller mer'
+                : ''
+            }
+            error={
+              props.mapNewQuantity === undefined || props.mapNewQuantity < 1
+            }
+            onChange={(e) => props.selectQuantity(Number(e.target.value))}
+            type="number"
+            value={props.mapNewQuantity}
+            InputProps={{ inputProps: { min: 1 } }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <IconButton onClick={() => props.toggleUpdate()}>
+            <Cancel />
+          </IconButton>
+          <IconButton
+            disabled={
+              props.mapNewQuantity === undefined || props.mapNewQuantity < 1
+            }
+            onClick={() => props.toggleUpdate()}
+          >
+            <CheckCircle />
+          </IconButton>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={props.mapDeleteOpen} onClose={() => props.toggleDelete()}>
+        <DialogTitle>Radera uppslag</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Vill du verkligen radera uppslaget?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <IconButton onClick={() => props.toggleDelete()}>
+            <Cancel />
+          </IconButton>
+          <IconButton onClick={() => props.toggleDelete()}>
+            <CheckCircle />
+          </IconButton>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

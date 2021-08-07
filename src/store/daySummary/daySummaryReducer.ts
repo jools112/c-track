@@ -11,7 +11,7 @@ export interface DaySummaryState {
 const initialState: DaySummaryState = {
   entries: [],
   allowedCalories: 1800,
-  newQuantity: 0,
+  newQuantity: undefined,
   updateOpen: false,
   deleteOpen: false
 };
@@ -48,6 +48,7 @@ export const DaySummaryReducer = (
         ...state,
         deleteOpen: !state.deleteOpen
       };
+
     default:
       return state;
   }
