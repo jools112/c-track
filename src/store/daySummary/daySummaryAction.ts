@@ -31,6 +31,18 @@ export const addEntry = (result: Result): ThunkAction => (
   });
 };
 
+export const deleteEntry = (): ThunkAction => (dispatch, getState) => {
+  const { selectedEntry } = getState().daySummary;
+  if (selectedEntry) {
+    const promise = axios.delete('http://127.0.0.1:5000/day-summary', {
+      data: { id: selectedEntry.id }
+    });
+    promise.then((response) =>
+      dispatch(deleteEntryActionCreator(selectedEntry.id))
+    );
+  }
+};
+
 export const receiveEntriesActionCreator = (entries: Array<Entry>) => ({
   type: 'DAY_SUMMARY_RECEIVE_ENTRIES',
   payload: entries
@@ -41,9 +53,19 @@ export const updateEntriesActionCreator = (newEntry: Entry) => ({
   payload: newEntry
 });
 
+export const deleteEntryActionCreator = (id: number) => ({
+  type: 'DAY_SUMMARY_DELETE_ENTRY',
+  payload: id
+});
+
 export const selectQuantity = (newQuantity: number) => ({
   type: 'DAY_SUMMARY_SELECT_QUANTITY',
   payload: newQuantity
+});
+
+export const selectEntry = (selectedEntry: Entry) => ({
+  type: 'DAY_SUMMARY_SELECT_ENTRY',
+  payload: selectedEntry
 });
 
 export const toggleUpdateDialog = () => ({

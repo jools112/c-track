@@ -6,6 +6,7 @@ export interface DaySummaryState {
   newQuantity: number | undefined;
   updateOpen: boolean;
   deleteOpen: boolean;
+  selectedEntry: Entry | undefined;
 }
 
 const initialState: DaySummaryState = {
@@ -13,7 +14,8 @@ const initialState: DaySummaryState = {
   allowedCalories: 1800,
   newQuantity: undefined,
   updateOpen: false,
-  deleteOpen: false
+  deleteOpen: false,
+  selectedEntry: undefined
 };
 
 // TODO actions: fetch existing entries, add entry, delete entry
@@ -32,6 +34,16 @@ export const DaySummaryReducer = (
       return {
         ...state,
         entries: [...state.entries, action.payload]
+      };
+    case 'DAY_SUMMARY_SELECT_ENTRY':
+      return {
+        ...state,
+        selectedEntry: action.payload
+      };
+    case 'DAY_SUMMARY_DELETE_ENTRY':
+      return {
+        ...state,
+        entries: state.entries.filter((entry) => entry.id !== action.payload)
       };
     case 'DAY_SUMMARY_SELECT_QUANTITY':
       return {

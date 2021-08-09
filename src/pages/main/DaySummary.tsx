@@ -19,9 +19,12 @@ import {
 import { Delete, Create, Cancel, CheckCircle } from '@material-ui/icons';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Entry } from '../../models/entry';
 import {
   fetchEntries,
+  deleteEntry,
   selectQuantity,
+  selectEntry,
   toggleUpdateDialog,
   toggleDeleteDialog
 } from '../../store/daySummary/daySummaryAction';
@@ -87,7 +90,10 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
                       </IconButton>
                       <IconButton
                         edge="end"
-                        onClick={() => props.toggleDelete()}
+                        onClick={() => {
+                          props.selectEntry(entry);
+                          props.toggleDelete();
+                        }}
                       >
                         <Delete />
                       </IconButton>
@@ -109,7 +115,14 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
           </Typography>
         </Grid>
       </Grid>
-      <Dialog open={props.mapUpdateOpen}>
+      <Dialog
+        open={props.mapUpdateOpen}
+        onClose={(e, reason) => {
+          if (reason === 'escapeKeyDown') {
+            props.toggleUpdate();
+          }
+        }}
+      >
         <DialogTitle>Uppdatera mängd</DialogTitle>
         <DialogContent>
           <DialogContentText>För in den nya mängden i gram.</DialogContentText>
@@ -142,18 +155,34 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
           </IconButton>
         </DialogActions>
       </Dialog>
-      <Dialog open={props.mapDeleteOpen} onClose={() => props.toggleDelete()}>
+      <Dialog
+        open={props.mapDeleteOpen}
+        onClose={(e, reason) => {
+          if (reason === 'escapeKeyDown') {
+            props.toggleDelete();
+          }
+        }}
+      >
         <DialogTitle>Radera uppslag</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Vill du verkligen radera uppslaget?
+            Vill du verkligen radera uppslaget{' "'}
+            {props.mapSelectedEntry === undefined
+              ? ''
+              : props.mapSelectedEntry.name}
+            " ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <IconButton onClick={() => props.toggleDelete()}>
             <Cancel />
           </IconButton>
-          <IconButton onClick={() => props.toggleDelete()}>
+          <IconButton
+            onClick={() => {
+              props.toggleDelete();
+              props.deleteEntry();
+            }}
+          >
             <CheckCircle />
           </IconButton>
         </DialogActions>
@@ -165,6 +194,7 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
 const mapStateToProps = (state: RootState) => {
   return {
     mapEntries: state.daySummary.entries,
+    mapSelectedEntry: state.daySummary.selectedEntry,
     mapAllowedCalories: state.daySummary.allowedCalories,
     mapDate: state.calendar.selectedDay,
     mapNewQuantity: state.daySummary.newQuantity,
@@ -179,9 +209,13 @@ const mapDispatchToProps = (dispatch: any) => ({
   selectQuantity: (selectedQuantity: number) =>
     dispatch(selectQuantity(selectedQuantity)),
 
+  selectEntry: (selectedEntry: Entry) => dispatch(selectEntry(selectedEntry)),
+
   toggleUpdate: () => dispatch(toggleUpdateDialog()),
 
-  toggleDelete: () => dispatch(toggleDeleteDialog())
+  toggleDelete: () => dispatch(toggleDeleteDialog()),
+
+  deleteEntry: () => dispatch(deleteEntry())
 });
 
 export const ConnectedDaySummary = connect(
