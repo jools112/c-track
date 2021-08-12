@@ -1,6 +1,5 @@
 import {
   createStyles,
-  Button,
   Grid,
   IconButton,
   List,
@@ -26,7 +25,8 @@ import {
   selectQuantity,
   selectEntry,
   toggleUpdateDialog,
-  toggleDeleteDialog
+  toggleDeleteDialog,
+  updateEntry
 } from '../../store/daySummary/daySummaryAction';
 import { RootState } from '../../store/rootReducer';
 
@@ -149,7 +149,12 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
             disabled={
               props.mapNewQuantity === undefined || props.mapNewQuantity < 1
             }
-            onClick={() => props.toggleUpdate()}
+            onClick={() => {
+              props.toggleUpdate();
+              props.mapSelectedEntry !== undefined
+                ? props.updateEntry(props.mapSelectedEntry)
+                : console.log('oopsie');
+            }}
           >
             <CheckCircle />
           </IconButton>
@@ -215,7 +220,9 @@ const mapDispatchToProps = (dispatch: any) => ({
 
   toggleDelete: () => dispatch(toggleDeleteDialog()),
 
-  deleteEntry: () => dispatch(deleteEntry())
+  deleteEntry: () => dispatch(deleteEntry()),
+
+  updateEntry: (selectedEntry: Entry) => dispatch(updateEntry(selectedEntry))
 });
 
 export const ConnectedDaySummary = connect(

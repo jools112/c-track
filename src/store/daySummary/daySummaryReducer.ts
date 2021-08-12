@@ -35,6 +35,10 @@ export const DaySummaryReducer = (
         ...state,
         entries: [...state.entries, action.payload]
       };
+    case 'DAY_SUMMARY_UPDATE_ENTRY':
+      return {
+        ...state
+      };
     case 'DAY_SUMMARY_SELECT_ENTRY':
       return {
         ...state,

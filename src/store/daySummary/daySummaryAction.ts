@@ -31,6 +31,24 @@ export const addEntry = (result: Result): ThunkAction => (
   });
 };
 
+export const updateEntry = (entry: Entry): ThunkAction => (
+  dispatch,
+  getState
+) => {
+  const promise = axios.patch(
+    'http://127.0.0.1:5000/day-summary?date=' +
+      getState().calendar.selectedDay +
+      '&id=' +
+      entry.id,
+    {
+      quantity: getState().searchBar.selectedQuantity
+    }
+  );
+  promise.then((response) => {
+    dispatch(fetchEntries(getState().calendar.selectedDay));
+  });
+};
+
 export const deleteEntry = (): ThunkAction => (dispatch, getState) => {
   const { selectedEntry } = getState().daySummary;
   if (selectedEntry) {
