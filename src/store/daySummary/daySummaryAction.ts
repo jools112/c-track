@@ -41,7 +41,7 @@ export const updateEntry = (entry: Entry): ThunkAction => (
       '&id=' +
       entry.id,
     {
-      quantity: getState().searchBar.selectedQuantity
+      quantity: getState().daySummary.newQuantity
     }
   );
   promise.then((response) => {

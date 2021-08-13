@@ -82,6 +82,7 @@ export const DaySummary: React.FC<ReduxProps> = (props) => {
                       <IconButton
                         edge="end"
                         onClick={() => {
+                          props.selectEntry(entry);
                           props.toggleUpdate();
                           props.selectQuantity(entry.quantity);
                         }}
