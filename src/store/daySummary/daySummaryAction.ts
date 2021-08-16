@@ -45,7 +45,8 @@ export const updateEntry = (entry: Entry): ThunkAction => (
     }
   );
   promise.then((response) => {
-    dispatch(fetchEntries(getState().calendar.selectedDay));
+    console.log('data: ', response.data);
+    dispatch(receiveEntryActionCreator(response.data));
   });
 };
 
@@ -66,9 +67,9 @@ export const receiveEntriesActionCreator = (entries: Array<Entry>) => ({
   payload: entries
 });
 
-export const updateEntriesActionCreator = (newEntry: Entry) => ({
-  type: 'DAY_SUMMARY_UPDATE_ENTRIES',
-  payload: newEntry
+export const receiveEntryActionCreator = (entry: Entry) => ({
+  type: 'DAY_SUMMARY_RECEIVE_ENTRY',
+  payload: entry
 });
 
 export const deleteEntryActionCreator = (id: number) => ({

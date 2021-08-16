@@ -30,15 +30,15 @@ export const DaySummaryReducer = (
         ...state,
         entries: action.payload
       };
-    case 'DAY_SUMMARY_UPDATE_ENTRIES':
+
+    case 'DAY_SUMMARY_RECEIVE_ENTRY':
       return {
         ...state,
-        entries: [...state.entries, action.payload]
+        entries: state.entries.map((entry) =>
+          entry.id === state.selectedEntry?.id ? action.payload : entry
+        )
       };
-    case 'DAY_SUMMARY_UPDATE_ENTRY':
-      return {
-        ...state
-      };
+
     case 'DAY_SUMMARY_SELECT_ENTRY':
       return {
         ...state,
