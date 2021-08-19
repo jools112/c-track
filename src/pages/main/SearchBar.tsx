@@ -22,9 +22,7 @@ import {
   selectQuantity
 } from '../../store/searchBar/searchBarAction';
 
-interface Props {
-  stringProp: string;
-}
+interface Props {}
 
 type ReduxProps = Props &
   ReturnType<typeof mapStateToProps> &

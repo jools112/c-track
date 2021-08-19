@@ -5,15 +5,18 @@ import {
 } from './daySummary/daySummaryReducer';
 import { searchBarReducer, SearchBarState } from './searchBar/searchBarReducer';
 import { CalendarReducer, CalendarState } from './calendar/calendarReducer';
+import { ButtonBarReducer, ButtonBarState } from './buttonBar/buttonBarReducer';
 
 export interface RootState {
-  searchBar: SearchBarState;
-  daySummary: DaySummaryState;
+  buttonBar: ButtonBarState;
   calendar: CalendarState;
+  daySummary: DaySummaryState;
+  searchBar: SearchBarState;
 }
 
 export const rootReducer = combineReducers({
-  searchBar: searchBarReducer,
+  buttonBar: ButtonBarReducer,
+  calendar: CalendarReducer,
   daySummary: DaySummaryReducer,
-  calendar: CalendarReducer
+  searchBar: searchBarReducer
 });

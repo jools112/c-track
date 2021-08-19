@@ -9,6 +9,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import { Grid } from '@material-ui/core';
 import { palette } from './constants/palette';
+import { ConnectedButtonbar } from './pages/main/ButtonBar';
 
 const theme = createMuiTheme({
   palette: {
@@ -38,7 +39,8 @@ function App() {
           <Grid container spacing={2}>
             <Header />
             <ConnectedCalendarNav />
-            <ConnectedSearchBar stringProp="SearchBar placeholder"></ConnectedSearchBar>
+            <ConnectedButtonbar />
+            <ConnectedSearchBar></ConnectedSearchBar>
             <ConnectedDaySummary />
           </Grid>
         </ThemeProvider>
