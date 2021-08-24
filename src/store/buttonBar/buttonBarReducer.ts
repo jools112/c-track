@@ -1,5 +1,7 @@
+import { DialogType } from '../../models/dialogType';
+
 export interface ButtonBarState {
-  dialogOpen: 'none' | 'food' | 'meal' | 'weight' | 'waist';
+  dialogOpen: DialogType;
   selectedWeight: number | undefined;
   selectedWaist: number | undefined;
 }
